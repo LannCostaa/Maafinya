@@ -1,0 +1,72 @@
+body {
+    font-family: "Courier New", Courier, monospace;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('https://i.postimg.cc/BQfGMbMJ/Impostor-Gelap20240928-110154-Selebgram-18-JPEG-NON-AUX-By-Impostor-Gelap.jpg'); /* Ganti URL_GAMBAR dengan URL gambar latar belakang Anda */
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+.blur-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: inherit;
+    filter: blur(8px); /* Efek blur pada background */
+    z-index: 0; /* Di belakang konten lainnya */
+}
+.card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.8); /* Warna putih semi-transparan */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    text-align: center;
+    z-index: 1; /* Di atas background blur */
+    border: 3px solid transparent; /* Hapus warna merah pada border */
+}
+.fade {
+    opacity: 0;
+    transition: opacity 1s ease-in-out; /* Efek transisi */
+}
+.fade-in {
+    opacity: 1; /* Efek muncul */
+}
+.fade-out {
+    opacity: 0; /* Efek menghilang */
+}
+.signature {
+    font-style: italic;
+    color: #555;
+    margin-top: 20px;
+    display: none; /* Awalnya disembunyikan */
+}
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid #e74c3c; /* Border merah */
+    background-color: white;
+    color: #e74c3c;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+button:hover {
+    background-color: #e74c3c; /* Ganti warna latar belakang saat hover */
+    color: white; /* Ganti warna teks saat hover */
+}
+.popup-image {
+    display: none; /* Awalnya disembunyikan */
+    max-width: 100px; /* Ukuran gambar kecil */
+    border-radius: 10px;
+    animation: pop 0.5s ease; /* Efek pop-up */
+    margin: 10px auto; /* Jarak dengan border */
+    position: relative; /*

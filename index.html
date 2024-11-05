@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasLannn</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link ke file CSS -->
+</head>
+<body>
+    <div class="blur-background"></div> <!-- Background blur -->
+    <div class="card">
+        <div id="imageContainer" style="text-align: center;"></div> <!-- Kontainer gambar -->
+        <p class="signature" id="signature">- MasLannn</p> <!-- Tanda tangan, awalnya disembunyikan -->
+        <div class="fade" id="typewriter"></div>
+        
+        <button id="playButton">Klik Ini</button> <!-- Tombol Lanjut -->
+        <audio id="backgroundMusic" src="https://a.top4top.io/m_32313fcvx0.mp3" preload="auto"></audio> <!-- Ganti URL_AUDIO dengan URL file audio Anda -->
+        <p class="signature" id="signature">- MasLannn</p> <!-- Tanda tangan, awalnya disembunyikan -->
+        <div id="choiceButtons" style="display: none; margin-top: 20px;"> <!-- Tombol pilihan, awalnya disembunyikan -->
+            <button id="repeatButton">Ulangi</button>
+            <button id="exitButton">Gamau</button>
+        </div>
+    </div>
+
+    <script>
+        const sentences = [
+            { text: "Maafin Aku ya ", duration: 2000, image: "https://feeldreams.github.io/bunga.gif" },
+            { text: "Kalo aku nyakitin kamu ", duration: 1200, image: "https://feeldreams.github.io/pandakuning.gif" },
+            { text: "Semoga kamu bahagia", duration: 2000, image: "https://feeldreams.github.io/cilukba.gif" },
+            { text: "Kalo aku ga bakal bahagia, ", duration: 1200, image: "https://feeldreams.github.io/pandacoklat.gif" },
+            { text: "Soalnya ga ada kamu", duration: 1500, image: "https://feeldreams.github.io/emawh.gif" }
+        ];
+
+        let sentenceIndex = 0;
+        let musicPlayed = false; // Status musik
+
+        function showPopupImage(image) {
+            const imageContainer = document.getElementById("imageContainer");
+            const popupImage = document.createElement("img");
+            popupImage.src = image;
+            popupImage.className = "popup-image";
+            imageContainer.innerHTML = "";
+            imageContainer.appendChild(popupImage);
+            popupImage.style.display = "block";
+            return popupImage;
+        }
+
+        function typeSentence() {
+            const typewriterElement = document.getElementById("typewriter");
+            const { text, duration, image } = sentences[sentenceIndex];
+
+            const popupImage = showPopupImage(image);
+            popupImage.style.display = "block";
+
+            typewriterElement.classList.remove("fade-out");
+            typewriterElement.classList.add("fade-in");
+            typewriterElement.textContent = text;
+
+            setTimeout(() => {
+                typewriterElement.classList.remove("fade-in");
+                typewriterElement.classList.add("fade-out");
+            }, duration);
+
+            setTimeout(() => {
+                sentenceIndex = (sentenceIndex + 1) % sentences.length;
+                typewriterElement.textContent = "";
+                popupImage.style.display = "none";
+
+                if (sentenceIndex === 0) {
+                    document.getElementById("signature").style.display = "block";
+                    document.getElementById("choiceButtons").style.display = "block";
+                } else {
+                    typeSentence();
+                }
+            }, duration + 1000);
+        }
+
+        function playMusic() {
+            const backgroundMusic = document.getElementById("backgroundMusic");
+            backgroundMusic.currentTime = 0; // Atur kembali waktu ke awal
+            backgroundMusic.play();
+            musicPlayed = true;
+        }
+
+        document.getElementById("playButton").addEventListener("click", () => {
+            if (!musicPlayed) {
+                playMusic();
+            }
+
+            const firstImage = sentences[sentenceIndex].image;
+            showPopupImage(firstImage);
+            setTimeout(() => {
+                typeSentence();
+            }, 1000);
+            document.getElementById("playButton").style.display = "none";
+        });
+
+        document.getElementById("repeatButton").addEventListener("click", () => {
+            sentenceIndex = 0; // Kembali ke kalimat pertama
+            document.getElementById("signature").style.display = "none"; // Sembunyikan tanda tangan
+            document.getElementById("choiceButtons").style.display = "none"; // Sembunyikan tombol pilihan
+            playMusic(); // Memutar ulang musik
+            typeSentence(); // Mulai ulang mengetik
+        });
+
+        document.getElementById("exitButton").addEventListener("click", () => {
+            window.close(); // Menutup halaman
+        });
+    </script>
+</body>
+</html>
